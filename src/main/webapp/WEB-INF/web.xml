@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                    http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
+  <display-name>syw</display-name>
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+  <!--配置前端控制器-->
+  <servlet>
+    <servlet-name>springServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!--参数初始化，告诉DispatcherServlet去哪里找配置文件（默认是从WEB-INF中去寻找）-->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:/spring-mvc*.xml</param-value>
+    </init-param>
+    <!--在tomcat启动时初始化spring容器，不配置的话表示在第一次请求是创建容器-->
+    <load-on-startup>1</load-on-startup>
+    <!--selvlet文件上传-->
+<multipart-config>
+  <location>E:/CRRC/testUpdateload</location>
+  <max-file-size>2097152</max-file-size>
+  <max-request-size>2097152</max-request-size><!--一次请求最大上传-->
+  <file-size-threshold>10240</file-size-threshold><!--超过10kb放到硬盘 而不是内存-->
+</multipart-config>
+
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!--针对post编码过滤-->
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name><!--强制response编码过滤-->
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</web-app>

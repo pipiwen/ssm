@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--DI注解解析器-->
+    <context:annotation-config/>
+    <!--IOC注解解析器-->
+    <context:component-scan base-package="com.syw"/>
+    <!--aop注解解析器-->
+    <!--<aop:aspectj-autoproxy/>-->
+
+   <!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>-->
+    <!--事务注解解析器-->
+   <!-- <tx:annotation-driven transaction-manager="transactionManager"/>--><!--采用配置的transactionManager-->
+
+    <!--占位符解析-->
+    <context:property-placeholder ignore-unresolvable="true"
+                                  location="classpath:db.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+    </bean>
+    <!--qlSessionFactory-->
+    <bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+
+        <!--Mybatis配置文件-->
+        <property name="configLocation"
+                  value="classpath:mybatis-config.xml" />
+        <!--mapper.xml所在位置-->
+        <property name="mapperLocations" value="classpath:mappings/*/*.xml" />
+    </bean>
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="com.syw"/><!--mapper接口所在的包-->
+        <property name="annotationClass" value="com.syw.rad.annotation.persistence.annotation.MyBatisDao"/>
+    </bean>
+
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        &lt;!&ndash;mapper接口所在的包&ndash;&gt;
+        <property name="basePackage" value="com.syw.mapper" />
+    </bean>-->
+
+
+
+
+</beans>

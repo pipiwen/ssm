@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"/><!--加载配置文件-->
+    <!--日志技术-->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+        <!-- 延迟加载总开关 -->
+        <setting name="lazyLoadingEnabled" value="true" />
+        <!--禁止积极主动的加载-->
+        <setting name="aggressiveLazyLoading" value="false" />
+        <!--延迟加载触发方法-->
+        <setting name="lazyLoadTriggerMethods" value="clone" />
+    </settings>
+    <!--类型别名（放在setting后）别名不区分大小写-->
+    <typeAliases >
+    <!--<typeAlias type="com.syw.entity.User" alias="User"/>-->
+    <package name="com.syw.demo1.entity"/><!--自动为包下的类起别名-->
+</typeAliases>
+    <!--配置分页插件-->
+<plugins>
+    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+    <!--使用mysql方言-->
+    <property name="helperDialect" value="mysql"/>
+    </plugin>
+</plugins>
+<!--<environments default="dev">&lt;!&ndash;default表示选用那个environment&ndash;&gt;
+    <environment id="dev">
+        <transactionManager type="JDBC"/>
+        <dataSource type="POOLED">
+            <property name="driver" value="${jdbc.driverClassName}"/>
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+
+        </dataSource>
+    </environment>
+</environments>-->
+
+<!--关联映射文件-->
+   <!-- <mappers>
+        <mapper resource="mappings/UserMapper.xml"/>
+        <package name="com.syw.mapper"/>
+    </mappers>-->
+
+</configuration>
