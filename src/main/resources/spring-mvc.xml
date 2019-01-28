@@ -33,4 +33,6 @@
    <!-- <bean  id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="2097152"/>&lt;!&ndash;单位：B&ndash;&gt;
     </bean>-->
+   <!-- servlet3.0文件上传解析器 配置交给web.xml-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 </beans>

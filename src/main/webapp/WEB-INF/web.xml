@@ -23,7 +23,7 @@
   <location>E:/CRRC/testUpdateload</location>
   <max-file-size>2097152</max-file-size>
   <max-request-size>2097152</max-request-size><!--一次请求最大上传-->
-  <file-size-threshold>10240</file-size-threshold><!--超过10kb放到硬盘 而不是内存-->
+  <file-size-threshold>1024</file-size-threshold><!--超过1kb放到硬盘 而不是内存-->
 </multipart-config>
 
   </servlet>

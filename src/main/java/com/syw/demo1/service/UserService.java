@@ -2,6 +2,7 @@ package com.syw.demo1.service;
 
 import com.syw.demo1.dao.UserDao;
 import com.syw.demo1.entity.User;
+import com.syw.util.PageInfo;
 import com.syw.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,13 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserDao userDao;
-    
+
+    public PageInfo<User> getUserPageList() {
+
+        List<User> list =userDao.findListAll();
+        return new PageInfo<>(list);
+    }
+
     public List<User> findListAll(){
         //int i=1/0  测试页面exception
         return userDao.findListAll();
